@@ -1,0 +1,27 @@
+name: DevSecOps Security Pipeline
+
+# Trigger the pipeline on every push or pull request
+on: [push, pull_request]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the code from Git
+      - uses: actions/checkout@v3
+
+      # 2. Lint (syntax check) your YAML files to prevent misconfigurations
+      - name: Lint YAML files
+        uses: actionshub/yamllint@main
+
+      # 3. Scan for hardcoded secrets (passwords, API keys) in Git history
+      - name: Scan for secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+
+      # 4. Build the Docker image
+      - name: Build Docker image
+        run: docker build -t my-flask-app .
+
+      # 5. Scan the Docker image for known vulnerabilities (CVEs) using Trivy
+      - name: Scan Docker image with Trivy
+        run: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image my-flask-app
