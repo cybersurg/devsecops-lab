@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # 1. Checkout the code from Git
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # 2. Lint (syntax check) your YAML files to prevent misconfigurations
       - name: Lint YAML files
@@ -24,4 +24,6 @@ jobs:
 
       # 5. Scan the Docker image for known vulnerabilities (CVEs) using Trivy
       - name: Scan Docker image with Trivy
-        run: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image my-flask-app
+        run: > 
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          aquasec/trivy image my-flask-app
