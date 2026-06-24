@@ -1,7 +1,10 @@
+---
 name: DevSecOps Security Pipeline
 
 # Trigger the pipeline on every push or pull request
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   security-scan:
@@ -24,6 +27,6 @@ jobs:
 
       # 5. Scan the Docker image for known vulnerabilities (CVEs) using Trivy
       - name: Scan Docker image with Trivy
-        run: > 
+        run: >
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
           aquasec/trivy image my-flask-app
