@@ -1,4 +1,7 @@
 from flask import Flask, jsonify
+
+API_KEY = "sk_live_4eC39HqLyjWDarjtT1zdp7dc"  # Fake Stripe secret key
+
 app = Flask(__name__)
 
 @app.route("/")
